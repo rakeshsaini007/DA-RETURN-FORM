@@ -1,0 +1,6 @@
+{
+  "name": "EHRMS Employee Data Manager",
+  "description": "A React application to manage and update employee salary account details linked to a Google Sheet.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
