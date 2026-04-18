@@ -3,9 +3,9 @@ import { Search, Loader2, Database, AlertCircle, Sparkles, LogOut } from 'lucide
 import { motion, AnimatePresence } from 'motion/react';
 import { EmployeeCard } from './components/EmployeeCard';
 
-// Configuration: Google Apps Script Web App URL
-// This MUST be set as VITE_GAS_URL in your environment variables (e.g., .env or Vercel dashboard)
-const GAS_URL = import.meta.env.VITE_GAS_URL || "";
+// SET YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+// Prefer VITE_GAS_URL environment variable for production (Vercel/Cloud Run)
+const GAS_URL = import.meta.env.VITE_GAS_URL || "https://script.google.com/macros/s/AKfycbwgVkP-oQk2jOALnZoj_EmX1Kb3qexzizJFdx8bsFyFejWBRZiVT3LRCrcJ8EiYK8pF/exec";
 
 interface Employee {
   ehrmsCode: string;
@@ -150,25 +150,6 @@ export default function App() {
           <p className="text-blue-100/80 text-lg">Quick lookup and update for salary account details</p>
         </header>
 
-        {!GAS_URL && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-3xl text-sm text-amber-800"
-          >
-            <div className="flex gap-3">
-              <AlertCircle className="shrink-0 text-amber-500" size={20} />
-              <div className="space-y-2">
-                <p className="font-bold text-base">Backend Not Configured</p>
-                <p>The **VITE_GAS_URL** environment variable is missing. The application will not be able to fetch or save employee data until you provide your Google Apps Script Web App URL.</p>
-                <div className="pt-2">
-                  <p className="font-semibold px-2 py-1 bg-amber-100 rounded inline-block">Step: Add VITE_GAS_URL to your environment settings.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
         <section className="glass-card p-6 md:p-10 mb-8 border-none ring-1 ring-black/5">
           <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
@@ -185,7 +166,7 @@ export default function App() {
             </div>
             <button
               type="submit"
-              disabled={isLoading || !searchQuery || !GAS_URL}
+              disabled={isLoading || !searchQuery}
               className="btn-primary min-w-[160px] h-14"
             >
               {isLoading ? (
