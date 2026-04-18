@@ -71,7 +71,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({
         </div>
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-6">
+      <div className="space-y-6">
         <div className="space-y-2">
           <label htmlFor="accountNumber" className="text-sm font-semibold flex items-center gap-2">
             <CreditCard size={16} /> Salary Account Number
@@ -80,21 +80,16 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({
             <input
               type="text"
               id="accountNumber"
-              className={`input-field pr-10 ${errors.accountNumber ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-              value={formData.accountNumber}
-              onChange={(e) => onFormChange('accountNumber', e.target.value)}
-              placeholder="Min 11 digits"
+              readOnly
+              className="input-field pr-10 bg-neutral-50 cursor-default"
+              value={formData.accountNumber || "Not Provided"}
             />
-            {formData.accountNumber && !errors.accountNumber && (
+            {formData.accountNumber ? (
               <CheckCircle2 className="absolute right-3 top-3.5 text-green-500" size={18} />
-            )}
-            {errors.accountNumber && (
-              <AlertCircle className="absolute right-3 top-3.5 text-red-500" size={18} />
+            ) : (
+              <AlertCircle className="absolute right-3 top-3.5 text-neutral-300" size={18} />
             )}
           </div>
-          {errors.accountNumber && (
-            <p className="text-xs text-red-500 mt-1 font-medium">{errors.accountNumber}</p>
-          )}
         </div>
 
         <div className="space-y-2">
@@ -105,42 +100,22 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({
             <input
               type="text"
               id="ifscCode"
-              className={`input-field uppercase pr-10 font-mono ${errors.ifscCode ? 'border-red-500 focus:ring-red-500/20' : ''}`}
-              value={formData.ifscCode}
-              onChange={(e) => onFormChange('ifscCode', e.target.value.toUpperCase())}
-              placeholder="ABCD0123456"
-              maxLength={11}
+              readOnly
+              className="input-field uppercase pr-10 font-mono bg-neutral-50 cursor-default"
+              value={formData.ifscCode || "Not Provided"}
             />
-            {formData.ifscCode && !errors.ifscCode && (
+            {formData.ifscCode ? (
               <CheckCircle2 className="absolute right-3 top-3.5 text-green-500" size={18} />
-            )}
-            {errors.ifscCode && (
-              <AlertCircle className="absolute right-3 top-3.5 text-red-500" size={18} />
+            ) : (
+              <AlertCircle className="absolute right-3 top-3.5 text-neutral-300" size={18} />
             )}
           </div>
-          {errors.ifscCode && (
-            <p className="text-xs text-red-500 mt-1 font-medium">{errors.ifscCode}</p>
-          )}
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading || !!Object.values(errors).filter(Boolean).length}
-          className="btn-primary w-full h-14"
-        >
-          {isLoading ? (
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-            />
-          ) : (
-            <>
-              {employee.isFilled ? 'Update Record' : 'Submit Record'}
-            </>
-          )}
-        </button>
-      </form>
+        <div className="pt-4 border-t border-neutral-100 text-center">
+            <p className="text-xs text-neutral-400 font-medium italic">Data fetched from master records - View Only Mode</p>
+        </div>
+      </div>
     </motion.div>
   );
 };
